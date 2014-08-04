@@ -1,4 +1,9 @@
 <h1>My Lists</h1>
+<%= link_to '+ Add Task List', task_list_new_path %>
+
+<% flash.each do |type, msg| %>
+  <div style="background-color: lightgreen; height: 30px;"><p><%= msg %></p></div>
+ <% end %>
 
 <% @task_lists.each do |task_list| %>
 

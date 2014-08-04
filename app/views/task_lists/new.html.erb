@@ -1,0 +1,10 @@
+<h1>Add a task list</h1>
+
+<%= form_for @task_list, url: task_list_new_path  do |f| %>
+<p>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
+</p>
+
+  <%= f.submit "Create Task List" %>
+<% end %>
