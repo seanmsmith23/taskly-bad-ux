@@ -18,3 +18,17 @@ feature 'Task lists' do
   end
 
 end
+
+feature 'Logged Out' do
+
+  scenario 'User can click on About to get more information about the app' do
+    visit '/'
+
+    expect(page).to have_link("About")
+
+    click_link("About")
+
+    expect(page).to have_content("About")
+    expect(page).to have_content("This app is intended")
+  end
+end
