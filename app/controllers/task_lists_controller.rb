@@ -16,9 +16,13 @@ class TaskListsController < ApplicationController
 
     @task_list = TaskList.create(name: params[:task_list][:name])
 
-    @task_list.save
+    if @task_list.valid?
+      @task_list.save
+      redirect_to root_path, notice: "Task List was created successfully!"
+    else
+      redirect_to task_list_new_path, alert: "Your task list could not be created"
+    end
 
-    redirect_to root_path, notice: "Task List was created successfully!"
   end
 
 end
