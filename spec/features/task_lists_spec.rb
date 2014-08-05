@@ -254,6 +254,14 @@ feature 'Task lists' do
     expect(page).to have_content("Task List cannot be blank!")
   end
 
+  scenario "Creating a task with a due date in the past should not be valid" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task_date("Some Task", -3)
+
+    expect(page).to have_content("Your task could not be created")
+  end
+
 end
 
 feature 'Logged Out' do
