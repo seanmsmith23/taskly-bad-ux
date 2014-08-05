@@ -22,12 +22,24 @@
       <% if task_list.tasks %>
         <% task_list.tasks.each do |task| %>
 
-          <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
-          <div style="display: inline-block; position: relative; margin-left: -100px;">
-            <%= button_to "Delete", {:controller => :tasks,
-                                     :action => 'destroy',
-                                     :id => task.id }, :method => :delete %>
-          </div>
+          <% unless task.completed %>
+
+            <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
+
+            <div style="display: inline-block; position: relative; margin-left: -100px;">
+              <%= button_to "Complete", {:controller => :tasks,
+                                       :action => 'complete',
+                                       :id => task.id }, :method => :patch %>
+            </div>
+
+            <div style="display: inline-block; position: relative; margin-left: -150px;">
+              <%= button_to "Delete", {:controller => :tasks,
+                                       :action => 'destroy',
+                                       :id => task.id }, :method => :delete %>
+
+
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </section>

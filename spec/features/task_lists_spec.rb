@@ -135,6 +135,20 @@ feature 'Task lists' do
     expect(page).to_not have_content("Second List")
   end
 
+  scenario "User can complete tasks" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("Finish my job")
+
+    expect(page).to have_button("Complete")
+    expect(page).to have_content("Finish my job")
+
+    click_button("Complete")
+
+    expect(page).to_not have_button("Complete")
+    expect(page).to_not have_content("Finish my job")
+  end
+
 end
 
 feature 'Logged Out' do

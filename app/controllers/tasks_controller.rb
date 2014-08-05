@@ -27,4 +27,12 @@ class TasksController < ApplicationController
     redirect_to root_path, notice: "Task was deleted successfully!"
   end
 
+  def complete
+    @task = Task.find(params[:id])
+    @task.completed = true
+    @task.save
+
+    redirect_to root_path
+  end
+
 end
