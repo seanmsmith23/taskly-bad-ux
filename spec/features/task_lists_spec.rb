@@ -216,6 +216,34 @@ feature 'Task lists' do
     expect(page).to have_content("Nothing here to see!")
   end
 
+  scenario "Users should be able to assign tasks to users" do
+    create_user(name: "Jeff", email: "jeff@example.com")
+    create_user(name: "Hunter", email: "hunter@example.com")
+    visit signin_path
+    click_on "Login"
+    fill_in "Email", with: "jeff@example.com"
+    fill_in "Password", with: "password"
+    click_on "Login"
+    add_list("Work List")
+
+    within('#all-task-lists') do
+      expect(page).to have_link("+ Add Task")
+      first('.new-task').click_link("+ Add Task")
+    end
+
+    expect(page).to have_content("Assigned to")
+
+    fill_in "Description", with: "Do some work"
+    select "#{Date.today.year}",  from: "task_due_date_1i"
+    select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
+    select "#{Date.today.day}",  from: "task_due_date_3i"
+    select "Hunter", from: "task[assigned_to]"
+    click_button("Create Task")
+
+    expect(page).to have_content("Do some work")
+    expect(page).to have_content("- Hunter")
+  end
+
 end
 
 feature 'Logged Out' do

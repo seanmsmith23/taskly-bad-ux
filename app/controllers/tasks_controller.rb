@@ -2,6 +2,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @users = User.all
   end
 
   def create
@@ -10,7 +11,8 @@ class TasksController < ApplicationController
     @task = Task.create( user_id: current_user.id,
                          description: params[:task][:description],
                          due_date: date,
-                         task_list_id: params[:id] )
+                         task_list_id: params[:id],
+                         assigned_to: params[:task][:assigned_to])
 
     if @task.valid?
       @task.save
