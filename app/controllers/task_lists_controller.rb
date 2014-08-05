@@ -36,7 +36,7 @@ class TaskListsController < ApplicationController
       @task_list.save
       redirect_to root_path, notice: "Your task list was successfully updated!"
     else
-      redirect_to :back
+      redirect_to :back, alert: "Task List cannot be blank!"
     end
   end
 

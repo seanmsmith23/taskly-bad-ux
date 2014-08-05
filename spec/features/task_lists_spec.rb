@@ -178,17 +178,17 @@ feature 'Task lists' do
     create_task_date("Third task", 3)
 
     within('.task-box') do
-      within('.task:nth-of-type(1)') do
-        expect(page).to have_content("1 days")
-      end
+        within('.task:nth-of-type(1)') do
+          expect(page).to have_content("1 days")
+        end
 
-      within('.task:nth-of-type(2)') do
-        expect(page).to have_content("2 days")
-      end
+        within('.task:nth-of-type(2)') do
+          expect(page).to have_content("2 days")
+        end
 
-      within('.task:nth-of-type(3)') do
-        expect(page).to have_content("3 days")
-      end
+        within('.task:nth-of-type(3)') do
+          expect(page).to have_content("3 days")
+        end
     end
   end
 
@@ -242,6 +242,16 @@ feature 'Task lists' do
 
     expect(page).to have_content("Do some work")
     expect(page).to have_content("- Hunter")
+  end
+
+  scenario "Edit task_list form should show validations" do
+    create_and_signin_user
+    add_list("Work List")
+    click_link("Edit")
+    fill_in "Name", with: ""
+    click_button("Update Task List")
+
+    expect(page).to have_content("Task List cannot be blank!")
   end
 
 end
@@ -311,4 +321,8 @@ def create_task_date(description, day)
   select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
   select "#{Date.today.day + day}",  from: "task_due_date_3i"
   click_button("Create Task")
+end
+
+def showme
+  save_and_open_page
 end
