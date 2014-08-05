@@ -11,13 +11,12 @@ class TasksController < ApplicationController
                          description: params[:task][:description],
                          due_date: date,
                          task_list_id: params[:id] )
-    p '*' * 80
-    p date
-    p '*' * 80
 
     if @task.valid?
       @task.save
       redirect_to root_path, notice: "Task was created successfully!"
+    else
+      redirect_to :back, alert: "Your task could not be created"
     end
   end
 

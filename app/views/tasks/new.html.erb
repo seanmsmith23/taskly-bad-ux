@@ -1,7 +1,15 @@
 <h1>Add a task</h1>
 
+<% if flash[:alert] %>
+  <p style="color: red; font-size: 16px; font-weight: bold;"><%= flash[:alert] %></p>
+<% end %>
+
 <%= form_for @task, url: url_for(controller: 'tasks', action: 'create') do |f| %>
-  <p>
+  <% if flash[:alert] %>
+    <p style="color: red" id="error-description">
+  <% else %>
+    <p>
+  <% end %>
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </p>

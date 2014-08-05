@@ -81,12 +81,29 @@ feature 'Task lists' do
     expect(page).to have_content("Due date")
 
     fill_in "Description", with: "Finish adding tests"
-    fill_in "Date", with: "2014/08/12"
+    select "2014",  from: "task_due_date_1i"
+    select "August",  from: "task_due_date_2i"
+    select "6",  from: "task_due_date_3i"
     click_button("Create Task")
 
     expect(page).to have_content("Task was created successfully!")
     expect(page).to have_content("Finish adding tests")
     expect(page).to have_content("days")
+  end
+
+  scenario "User cannot add blank tasks" do
+    create_and_signin_user
+    add_list("Work List")
+    within('#new-task') do
+      expect(page).to have_link("+ Add Task")
+      click_link("+ Add Task")
+    end
+
+    click_button("Create Task")
+
+    expect(page).to have_content("Your task could not be created")
+    expect(page).to have_css('#error-description')
+
   end
 
 end
@@ -123,4 +140,11 @@ def add_list(name)
   click_link("+ Add Task List")
   fill_in "Name", with: name
   click_button("Create Task List")
+end
+
+def select_date(date, options = {})
+  field = options[:from]
+  select date.strftime('%Y'), :from => "#{field}_1i" #year
+  select date.strftime('%B'), :from => "#{field}_2i" #month
+  select date.strftime('%d'), :from => "#{field}_3i" #day
 end
