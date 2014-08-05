@@ -2,13 +2,24 @@
 <%= link_to '+ Add Task List', task_list_new_path %>
 
 <% flash.each do |type, msg| %>
-  <p><span style="background-color: lightgreen; border: solid green 2px;"><%= msg %></span></p>
+  <p><span style="background-color: lightgreen; border: solid green 2px; padding: 10px"><%= msg %></span></p>
 <% end %>
 
 <% @task_lists.each do |task_list| %>
 
   <section class="task-list">
-    <h1 style="display: inline-block"><%= task_list.name %></h1> <a href="/task_list/<%= task_list.id %>/edit" style="display: inline-block">Edit</a>
+    <h1 style="display: inline-block"><%= task_list.name %></h1>
+    <a href="/task_list/<%= task_list.id %>/edit" style="display: inline-block">Edit</a>
+    <div id="new-task" style="display: inline-block">
+      <a href="/task_list/<%= task_list.id %>/new_task">+ Add Task</a>
+    </div>
+  </section>
+  <section class="task-box">
+    <% if task_list.tasks %>
+      <% task_list.tasks.each do |task| %>
+        <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
+      <% end %>
+    <% end %>
   </section>
 
 <% end %>

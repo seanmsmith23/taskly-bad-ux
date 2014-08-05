@@ -68,6 +68,27 @@ feature 'Task lists' do
     expect(page).to have_content("Some Other Tasks")
   end
 
+  scenario "User can add tasks to a task list" do
+    create_and_signin_user
+    add_list("Work List")
+
+    within('#new-task') do
+      expect(page).to have_link("+ Add Task")
+      click_link("+ Add Task")
+    end
+
+    expect(page).to have_content("Description")
+    expect(page).to have_content("Due date")
+
+    fill_in "Description", with: "Finish adding tests"
+    fill_in "Date", with: "2014/08/12"
+    click_button("Create Task")
+
+    expect(page).to have_content("Task was created successfully!")
+    expect(page).to have_content("Finish adding tests")
+    expect(page).to have_content("days")
+  end
+
 end
 
 feature 'Logged Out' do

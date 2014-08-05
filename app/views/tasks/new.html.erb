@@ -1,0 +1,14 @@
+<h1>Add a task</h1>
+
+<%= form_for @task, url: url_for(controller: 'tasks', action: 'create') do |f| %>
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :due_date %><br>
+    <%= f.date_select :due_date %><br>
+  </p>
+
+  <%= f.submit "Create Task" %>
+<% end %>
