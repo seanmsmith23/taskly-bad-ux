@@ -21,7 +21,7 @@
     </section>
 
     <section class="task-box">
-      <% if task_list.tasks %>
+      <% if task_list.tasks != [] %>
         <% task_list.tasks.order(:due_date).each do |task| %>
 
           <% unless task.completed %>
@@ -41,6 +41,8 @@
 
           <% end %>
         <% end %>
+      <% else %>
+        <p class="task" style="text-align: center"><i>Nothing here to see!</i></p>
       <% end %>
     </section>
   <% end %>

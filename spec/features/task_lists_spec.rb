@@ -209,6 +209,13 @@ feature 'Task lists' do
     expect(page).to_not have_content("New task")
   end
 
+  scenario "Empty task lists should show a friendly message" do
+    create_and_signin_user
+    add_list("Work List")
+
+    expect(page).to have_content("Nothing here to see!")
+  end
+
 end
 
 feature 'Logged Out' do
