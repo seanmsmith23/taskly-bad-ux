@@ -1,0 +1,7 @@
+<%= form_for @task_list, url: url_for(controller: "task_lists", action: "edit")  do|f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name%><br>
+
+  <%= f.submit "Update Task List" %>
+<% end %>
+

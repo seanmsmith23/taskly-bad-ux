@@ -41,17 +41,31 @@ feature 'Task lists' do
   end
 
   scenario "User cannot provide a blank name when creating a new task list" do
-    create_user email: "user@example.com"
-    visit signin_path
-    click_on "Login"
-    fill_in "Email", with: "user@example.com"
-    fill_in "Password", with: "password"
-    click_on "Login"
+    create_and_signin_user
     click_link("+ Add Task List")
 
     click_button("Create Task")
 
     expect(page).to have_content("Your task list could not be created")
+  end
+
+  scenario "User can edit a task list" do
+    create_and_signin_user
+    add_list("Some Tasks")
+
+    expect(page).to have_link("Edit")
+
+    click_link("Edit")
+
+    expect(page).to have_content("Name")
+    expect(find_field("Name").value).to eq("Some Tasks")
+    expect(page).to have_button("Update Task List")
+
+    fill_in "Name", with: "Some Other Tasks"
+    click_button("Update Task List")
+
+    expect(page).to have_content("Your task list was successfully updated!")
+    expect(page).to have_content("Some Other Tasks")
   end
 
 end
@@ -68,4 +82,24 @@ feature 'Logged Out' do
     expect(page).to have_content("About")
     expect(page).to have_content("This app is intended")
   end
+end
+
+
+
+
+### HELPER METHODS ###
+
+def create_and_signin_user
+  create_user email: "user@example.com"
+  visit signin_path
+  click_on "Login"
+  fill_in "Email", with: "user@example.com"
+  fill_in "Password", with: "password"
+  click_on "Login"
+end
+
+def add_list(name)
+  click_link("+ Add Task List")
+  fill_in "Name", with: name
+  click_button("Create Task List")
 end
