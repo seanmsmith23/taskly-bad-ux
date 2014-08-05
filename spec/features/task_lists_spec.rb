@@ -102,8 +102,7 @@ feature 'Task lists' do
 
     click_button("Create Task")
 
-    expect(page).to have_content("Your task could not be created")
-    expect(page).to have_css('#error-description')
+    expect(page).to have_content("Can't be blank")
   end
 
   scenario "User can delete tasks" do
@@ -259,7 +258,7 @@ feature 'Task lists' do
     add_list("Work List")
     create_task_date("Some Task", -3)
 
-    expect(page).to have_content("Your task could not be created")
+    expect(page).to have_content("Due date cannot be in the past!")
   end
 
 end

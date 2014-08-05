@@ -6,8 +6,8 @@ class TasksController < ApplicationController
   end
 
   def create
+    @users = User.all
     date = Date.new( params[:task]["due_date(1i)"].to_i, params[:task]["due_date(2i)"].to_i, params[:task]["due_date(3i)"].to_i )
-
     @task = Task.create( user_id: current_user.id,
                          description: params[:task][:description],
                          due_date: date,
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
       @task.save
       redirect_to root_path, notice: "Task was created successfully!"
     else
-      redirect_to :back, alert: "Your task could not be created"
+      render :new, alert: "Your task could not be created"
     end
   end
 
