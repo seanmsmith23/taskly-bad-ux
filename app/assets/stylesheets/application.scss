@@ -86,13 +86,14 @@ main {
 }
 
 #task-box {
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
   font-size: 20px;
   width: 70%;
 }
 
 .task {
-  margin-left: 15px;
+  margin: 10px 0px 0px 15px;
   padding: 1em;
   background-color: lightgrey;
   width: 70%;
