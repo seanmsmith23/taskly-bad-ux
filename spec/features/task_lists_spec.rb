@@ -72,7 +72,7 @@ feature 'Task lists' do
     create_and_signin_user
     add_list("Work List")
 
-    within('#new-task') do
+    within('.new-task') do
       expect(page).to have_link("+ Add Task")
       click_link("+ Add Task")
     end
@@ -94,7 +94,7 @@ feature 'Task lists' do
   scenario "User cannot add blank tasks" do
     create_and_signin_user
     add_list("Work List")
-    within('#new-task') do
+    within('.new-task') do
       expect(page).to have_link("+ Add Task")
       click_link("+ Add Task")
     end
@@ -117,6 +117,22 @@ feature 'Task lists' do
 
     expect(page).to_not have_content("Finish that important thing")
     expect(page).to have_content("Task was deleted successfully!")
+  end
+
+  scenario "Users can view a single task list's tasks" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("Finish that important thing")
+    add_list("Second List")
+
+    expect(page).to have_link("Work List")
+    expect(page).to have_link("Second List")
+
+    click_link("Work List")
+
+    expect(page).to have_content("Finish that important thing")
+    expect(page).to have_content("Work List")
+    expect(page).to_not have_content("Second List")
   end
 
 end
@@ -163,9 +179,9 @@ def select_date(date, options = {})
 end
 
 def create_task(description)
-  within('#new-task') do
+  within('#all-task-lists') do
     expect(page).to have_link("+ Add Task")
-    click_link("+ Add Task")
+    first('.new-task').click_link("+ Add Task")
   end
 
   fill_in "Description", with: description

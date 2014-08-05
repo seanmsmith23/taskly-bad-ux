@@ -5,26 +5,31 @@
   <p><span style="background-color: lightgreen; border: solid green 2px; padding: 10px"><%= msg %></span></p>
 <% end %>
 
-<% @task_lists.each do |task_list| %>
+<div id="all-task-lists">
+  <% @task_lists.each do |task_list| %>
 
-  <section class="task-list">
-    <h1 style="display: inline-block"><%= task_list.name %></h1>
-    <a href="/task_list/<%= task_list.id %>/edit" style="display: inline-block">Edit</a>
-    <div id="new-task" style="display: inline-block">
-      <a href="/task_list/<%= task_list.id %>/new_task">+ Add Task</a>
-    </div>
-  </section>
-  <section class="task-box">
-    <% if task_list.tasks %>
-      <% task_list.tasks.each do |task| %>
-        <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
-        <div style="display: inline-block; position: relative; margin-left: -100px;">
-          <%= button_to "Delete", {:controller => :tasks,
-                                   :action => 'destroy',
-                                   :id => task.id }, :method => :delete %>
-        </div>
+    <section class="task-list">
+
+      <h1 style="display: inline-block"><a href="/task_list/<%= task_list.id %>"><%= task_list.name %></a></h1>
+      <a href="/task_list/<%= task_list.id %>/edit" style="display: inline-block">Edit</a>
+      <div class="new-task" style="display: inline-block">
+        <a href="/task_list/<%= task_list.id %>/new_task">+ Add Task</a>
+      </div>
+
+    </section>
+
+    <section class="task-box">
+      <% if task_list.tasks %>
+        <% task_list.tasks.each do |task| %>
+
+          <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
+          <div style="display: inline-block; position: relative; margin-left: -100px;">
+            <%= button_to "Delete", {:controller => :tasks,
+                                     :action => 'destroy',
+                                     :id => task.id }, :method => :delete %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </section>
-
-<% end %>
+    </section>
+  <% end %>
+</div>
