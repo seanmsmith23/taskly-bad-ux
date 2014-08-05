@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   patch "task/complete" => "tasks#complete"
   get "task_list/:id" => "task_lists#show"
   get "task_list/:id/completed" => "task_lists#show_completed"
+  post "task_list/:id/delete" => "task_lists#destroy"
 end

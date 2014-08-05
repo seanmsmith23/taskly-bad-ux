@@ -190,7 +190,23 @@ feature 'Task lists' do
         expect(page).to have_content("3 days")
       end
     end
+  end
 
+  scenario "User should be able to delet a task list, which deletes its tasks as well" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("New task")
+
+    expect(page).to have_content("Work List")
+    expect(page).to have_content("New task")
+    expect(page).to have_link("Delete")
+
+    click_link("Delete")
+
+    expect(page).to have_content("Task List was deleted successfully!")
+
+    expect(page).to_not have_content("Work List")
+    expect(page).to_not have_content("New task")
   end
 
 end

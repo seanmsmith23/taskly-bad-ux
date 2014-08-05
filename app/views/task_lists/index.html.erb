@@ -16,6 +16,7 @@
         <a href="/task_list/<%= task_list.id %>/new_task">+ Add Task</a>
       </div>
       <a href="/task_list/<%= task_list.id %>/completed" style="display: inline-block">Completed</a>
+      <%= link_to "Delete", "/task_list/#{task_list.id}/delete", method: :post %>
 
     </section>
 
