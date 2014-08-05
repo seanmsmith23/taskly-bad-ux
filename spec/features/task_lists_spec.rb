@@ -149,6 +149,26 @@ feature 'Task lists' do
     expect(page).to_not have_content("Finish my job")
   end
 
+  scenario "User can view completed tasks" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("Finish my job")
+
+    expect(page).to have_button("Complete")
+    expect(page).to have_content("Finish my job")
+
+    click_button("Complete")
+
+    expect(page).to_not have_button("Complete")
+    expect(page).to_not have_content("Finish my job")
+    expect(page).to have_link("Completed")
+
+    click_link("Completed")
+
+    expect(page).to have_content("Finish my job")
+    expect(page).to have_button("Delete")
+  end
+
 end
 
 feature 'Logged Out' do

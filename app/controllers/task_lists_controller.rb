@@ -44,4 +44,8 @@ class TaskListsController < ApplicationController
     @task_list = TaskList.find(params[:id])
   end
 
+  def show_completed
+    @task_list = TaskList.find(params[:id])
+  end
+
 end

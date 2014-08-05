@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   delete "task/delete" => "tasks#destroy"
   patch "task/complete" => "tasks#complete"
   get "task_list/:id" => "task_lists#show"
+  get "task_list/:id/completed" => "task_lists#show_completed"
 end
