@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'capybara/rails'
+require 'launchy'
 
 feature 'Task lists' do
 
@@ -169,6 +170,29 @@ feature 'Task lists' do
     expect(page).to have_button("Delete")
   end
 
+  scenario "Tasks should appear in chronological order" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task_date("Finish my job", 2)
+    create_task_date("Start other job", 1)
+    create_task_date("Third task", 3)
+
+    within('.task-box') do
+      within('.task:nth-of-type(1)') do
+        expect(page).to have_content("1 days")
+      end
+
+      within('.task:nth-of-type(2)') do
+        expect(page).to have_content("2 days")
+      end
+
+      within('.task:nth-of-type(3)') do
+        expect(page).to have_content("3 days")
+      end
+    end
+
+  end
+
 end
 
 feature 'Logged Out' do
@@ -219,8 +243,21 @@ def create_task(description)
   end
 
   fill_in "Description", with: description
-  select "2014",  from: "task_due_date_1i"
-  select "August",  from: "task_due_date_2i"
-  select "6",  from: "task_due_date_3i"
+  select "#{Date.today.year}",  from: "task_due_date_1i"
+  select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
+  select "#{Date.today.day}",  from: "task_due_date_3i"
+  click_button("Create Task")
+end
+
+def create_task_date(description, day)
+  within('#all-task-lists') do
+    expect(page).to have_link("+ Add Task")
+    first('.new-task').click_link("+ Add Task")
+  end
+
+  fill_in "Description", with: description
+  select "#{Date.today.year}",  from: "task_due_date_1i"
+  select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
+  select "#{Date.today.day + day}",  from: "task_due_date_3i"
   click_button("Create Task")
 end

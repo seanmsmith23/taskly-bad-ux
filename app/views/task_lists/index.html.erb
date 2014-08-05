@@ -21,7 +21,7 @@
 
     <section class="task-box">
       <% if task_list.tasks %>
-        <% task_list.tasks.each do |task| %>
+        <% task_list.tasks.order(:due_date).each do |task| %>
 
           <% unless task.completed %>
 
