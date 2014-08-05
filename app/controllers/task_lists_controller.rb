@@ -38,8 +38,6 @@ class TaskListsController < ApplicationController
     else
       redirect_to :back
     end
-
-
   end
 
 end

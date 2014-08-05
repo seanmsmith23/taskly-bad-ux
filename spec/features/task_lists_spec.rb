@@ -103,7 +103,20 @@ feature 'Task lists' do
 
     expect(page).to have_content("Your task could not be created")
     expect(page).to have_css('#error-description')
+  end
 
+  scenario "User can delete tasks" do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("Finish that important thing")
+
+    expect(page).to have_content("Finish that important thing")
+    expect(page).to have_button("Delete")
+
+    click_button("Delete")
+
+    expect(page).to_not have_content("Finish that important thing")
+    expect(page).to have_content("Task was deleted successfully!")
   end
 
 end
@@ -147,4 +160,17 @@ def select_date(date, options = {})
   select date.strftime('%Y'), :from => "#{field}_1i" #year
   select date.strftime('%B'), :from => "#{field}_2i" #month
   select date.strftime('%d'), :from => "#{field}_3i" #day
+end
+
+def create_task(description)
+  within('#new-task') do
+    expect(page).to have_link("+ Add Task")
+    click_link("+ Add Task")
+  end
+
+  fill_in "Description", with: description
+  select "2014",  from: "task_due_date_1i"
+  select "August",  from: "task_due_date_2i"
+  select "6",  from: "task_due_date_3i"
+  click_button("Create Task")
 end

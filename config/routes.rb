@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   patch "task_list/:id/edit" => "task_lists#update"
   get "task_list/:id/new_task" => "tasks#new"
   post "task_list/:id/new_task" => "tasks#create"
+  delete "task/delete" => "tasks#destroy"
 end
