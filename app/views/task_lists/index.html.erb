@@ -2,7 +2,7 @@
 <%= link_to '+ Add Task List', task_list_new_path %>
 
 <% flash.each do |type, msg| %>
-  <div style="background-color: lightgreen; height: 30px; border: solid green 2px;"><p><%= msg %></p></div>
+  <p><span style="background-color: lightgreen; border: solid green 2px;"><%= msg %></span></p>
 <% end %>
 
 <% @task_lists.each do |task_list| %>
