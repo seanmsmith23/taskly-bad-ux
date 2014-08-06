@@ -2,7 +2,7 @@
   <p style="color: red; font-size: 16px; font-weight: bold;"><%= flash[:alert] %></p>
 <% end %>
 
-<%= form_for @task_list, url: url_for(controller: "task_lists", action: "edit")  do|f| %>
+<%= form_for @task_list, url: task_list_path, method: :patch do|f| %>
   <%= f.label :name %><br>
   <%= f.text_field :name%><br>
 

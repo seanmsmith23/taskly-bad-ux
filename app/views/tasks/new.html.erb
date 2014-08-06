@@ -4,7 +4,7 @@
   <p style="color: red; font-size: 16px; font-weight: bold;"><%= flash[:alert] %></p>
 <% end %>
 
-<%= form_for @task, url: url_for(controller: 'tasks', action: 'create') do |f| %>
+<%= form_for @task, url: task_list_tasks_path(task_list_id: @task_list.id) do |f| %>
 
   <p>
     <p style="color:red; font-weight: bold"><%= @task.errors[:description].first.capitalize if @task.errors[:description] != [] %></p>
@@ -19,7 +19,7 @@
   </p>
 
   <p style="color:red; font-weight: bold"><%= @task.errors[:assigned_to].first if @task.errors[:assigned_to] != [] %></p>
-  <%= f.label :assigned_to %><br>
+    <%= f.label :assigned_to %><br>
     <%= f.collection_select(:assigned_to, @users, :name, :name, {include_blank: true} ) %><br><br>
 
   <%= f.submit "Create Task" %>

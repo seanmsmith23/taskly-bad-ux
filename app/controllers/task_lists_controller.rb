@@ -1,5 +1,4 @@
 class TaskListsController < ApplicationController
-  skip_before_action :ensure_current_user, only: :about
 
   def index
     @task_lists = TaskList.order(:name)
@@ -19,7 +18,7 @@ class TaskListsController < ApplicationController
       @task_list.save
       redirect_to root_path, notice: "Task List was created successfully!"
     else
-      redirect_to task_list_new_path, alert: "Your task list could not be created"
+      redirect_to new_task_list_path, alert: "Your task list could not be created"
     end
 
   end

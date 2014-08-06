@@ -4,7 +4,7 @@
   <p style="color: red; font-size: 16px; font-weight: bold;"><%= flash[:alert] %></p>
 <% end %>
 
-<%= form_for @task_list, url: task_list_new_path  do |f| %>
+<%= form_for @task_list, url: task_lists_path  do |f| %>
 <p>
   <%= f.label :name %><br>
   <%= f.text_field :name %>

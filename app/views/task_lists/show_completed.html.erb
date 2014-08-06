@@ -10,9 +10,7 @@
       <% if task.completed %>
         <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days)</p>
         <div style="display: inline-block; position: relative; margin-left: -100px;">
-          <%= button_to "Delete", {:controller => :tasks,
-                                   :action => 'destroy',
-                                   :id => task.id }, :method => :delete %>
+          <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
         </div>
       <% end %>
     <% end %>

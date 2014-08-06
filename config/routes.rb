@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
+  resources :task_lists do
+    resources :tasks, except: [:destroy]
+  end
+  resources :tasks, only: [:destroy]
+
   root "task_lists#index"
+
+  get "about" => "about#show", as: :about
+  patch "task/complete" => "tasks#complete"
+  get "task_list/:id/completed" => "task_lists#show_completed"
+
+  ## Original Routes ##
+
   get "signin" => "sessions#new", as: :signin
   post "signin" => "sessions#create"
   get "signout" => "sessions#destroy", as: :signout
-  get "about" => "task_lists#about"
-  get "task_list/new" => "task_lists#new"
-  post "task_list/new" => "task_lists#create"
-  get "task_list/:id/edit" => "task_lists#edit"
-  patch "task_list/:id/edit" => "task_lists#update"
-  get "task_list/:id/new_task" => "tasks#new"
-  post "task_list/:id/new_task" => "tasks#create"
-  delete "task/delete" => "tasks#destroy"
-  patch "task/complete" => "tasks#complete"
-  get "task_list/:id" => "task_lists#show"
-  get "task_list/:id/completed" => "task_lists#show_completed"
-  post "task_list/:id/delete" => "task_lists#destroy"
 end
