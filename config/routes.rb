@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :task_lists do
-    resources :tasks, except: [:destroy]
+    resources :tasks, except: [:destroy, :index]
   end
-  resources :tasks, only: [:destroy]
+  resources :tasks, only: [:destroy, :index]
 
   root "task_lists#index"
 

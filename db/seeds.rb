@@ -8,5 +8,12 @@ User.create!(
   password_confirmation: 'password'
 )
 
+User.create!(
+  name: "Second Person",
+  email: 'second@example.com',
+  password: 'password',
+  password_confirmation: 'password'
+)
+
 TaskList.create!(name: "Work List")
 TaskList.create!(name: "Household Chores")

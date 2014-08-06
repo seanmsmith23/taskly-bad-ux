@@ -280,7 +280,18 @@ feature 'Task lists' do
     expect(page).to have_content("Must assign task to a user")
   end
 
+  scenario "Users can click 'My Tasks' and see all tasks that have been assigned to them." do
+    create_and_signin_user
+    add_list("Work List")
+    create_task("Some Task")
 
+    expect(page).to have_content("My Tasks")
+
+    click_link("My Tasks")
+
+    expect(page).to have_content("Work List")
+    expect(page).to have_content("Some Task")
+  end
 
 end
 

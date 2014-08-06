@@ -39,4 +39,8 @@ class TasksController < ApplicationController
     redirect_to root_path
   end
 
+  def index
+    @created = TaskList.created_by(current_user.id)
+    @task_list = TaskList.assigned_to(current_user.name)
+  end
 end
