@@ -3,6 +3,7 @@ class Task < ActiveRecord::Base
 
   validates :description, presence: true
   validate :past_due_date
+  validates :assigned_to, presence: {message: "Must assign task to a user"}
 
   def past_due_date
     if (due_date - Date.today) < 0

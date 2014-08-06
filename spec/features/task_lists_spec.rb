@@ -85,6 +85,8 @@ feature 'Task lists' do
     select "2014",  from: "task_due_date_1i"
     select "August",  from: "task_due_date_2i"
     select "6",  from: "task_due_date_3i"
+    select "Some User", from: "task[assigned_to]"
+
     click_button("Create Task")
 
     expect(page).to have_content("Task was created successfully!")
@@ -261,6 +263,25 @@ feature 'Task lists' do
     expect(page).to have_content("Due date cannot be in the past!")
   end
 
+  scenario "Creating a task without assigning a user will return an error" do
+    create_and_signin_user
+    add_list("Work List")
+    within('#all-task-lists') do
+      expect(page).to have_link("+ Add Task")
+      first('.new-task').click_link("+ Add Task")
+    end
+
+    fill_in "Description", with: "Some task"
+    select "#{Date.today.year}",  from: "task_due_date_1i"
+    select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
+    select "#{Date.today.day}",  from: "task_due_date_3i"
+    click_button("Create Task")
+
+    expect(page).to have_content("Must assign task to a user")
+  end
+
+
+
 end
 
 feature 'Logged Out' do
@@ -314,6 +335,8 @@ def create_task(description)
   select "#{Date.today.year}",  from: "task_due_date_1i"
   select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
   select "#{Date.today.day}",  from: "task_due_date_3i"
+  select "Some User", from: "task[assigned_to]"
+
   click_button("Create Task")
 end
 
@@ -327,6 +350,7 @@ def create_task_date(description, day)
   select "#{Date.today.year}",  from: "task_due_date_1i"
   select "#{Date.today.strftime('%B')}",  from: "task_due_date_2i"
   select "#{Date.today.day + day}",  from: "task_due_date_3i"
+  select "Some User", from: "task[assigned_to]"
   click_button("Create Task")
 end
 

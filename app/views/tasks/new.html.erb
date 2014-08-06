@@ -5,24 +5,22 @@
 <% end %>
 
 <%= form_for @task, url: url_for(controller: 'tasks', action: 'create') do |f| %>
-  <% if flash[:alert] %>
-    <p style="color: red" id="error-description">
-  <% else %>
-    <p>
-  <% end %>
+
+  <p>
     <p style="color:red; font-weight: bold"><%= @task.errors[:description].first.capitalize if @task.errors[:description] != [] %></p>
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </p>
+
   <p style="color:red; font-weight: bold"><%= @task.errors[:due_date].first if @task.errors[:due_date] != [] %></p>
   <p>
     <%= f.label :due_date %><br>
     <%= f.date_select :due_date %><br>
   </p>
 
-    <%= f.label :assigned_to %><br>
-    <%= f.collection_select(:assigned_to, @users, :name, :name) %><br><br>
+  <p style="color:red; font-weight: bold"><%= @task.errors[:assigned_to].first if @task.errors[:assigned_to] != [] %></p>
+  <%= f.label :assigned_to %><br>
+    <%= f.collection_select(:assigned_to, @users, :name, :name, {include_blank: true} ) %><br><br>
 
   <%= f.submit "Create Task" %>
 <% end %>
-
