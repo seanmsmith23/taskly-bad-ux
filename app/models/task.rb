@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
 
   validates :description, presence: true
   validate :past_due_date
-  validate :task_is_assigned
+  validate :task_assignments
 
   def past_due_date
     if (due_date - Date.today) < 0
@@ -11,22 +11,21 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def task_is_assigned
+  def task_assignments
     all_users = [assigned_to, assigned_to_2, assigned_to_3, assigned_to_4]
     not_blank = all_users.delete_if{ |item| item == "" }
-    fail = []
-
-    p'*'*80
-    p all_users
-    p'*'*80
-    p not_blank
-    p'*'*80
+    users_to_assign = []
+    not_blank.each {|item| users_to_assign << item }
 
     if assigned_to == "" && assigned_to_2 == "" && assigned_to_3 == "" && assigned_to_4 == ""
       errors.add(:assigned_to, "Must assign at least one user")
-    elsif
-      all_users.each {|item| fail << item }
+    else
+      users_to_assign.each do |name|
+        if users_to_assign.count(name) > 1
+          errors.add(:assigned_to, "Can't assign more than one user to a task")
+          break
+        end
+      end
     end
-    p fail
   end
 end

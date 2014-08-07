@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :ensure_current_user
 
   def ensure_current_user
-    redirect_to signin_path unless current_user
+    redirect_to new_session_path unless current_user
   end
 
   def current_user

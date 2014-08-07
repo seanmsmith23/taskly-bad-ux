@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(version: 20140806214715) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "completed",     default: false
-    t.string   "assigned_to"
-    t.string   "assigned_to_2"
-    t.string   "assigned_to_3"
     t.string   "assigned_to_4"
+    t.string   "assigned_to_3"
+    t.string   "assigned_to_2"
+    t.string   "assigned_to"
   end
 
   create_table "users", force: true do |t|

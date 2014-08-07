@@ -1,7 +1,7 @@
 class AboutController < ApplicationController
-  skip_before_action :ensure_current_user, only: :show
+  skip_before_action :ensure_current_user, only: :index
 
-  def show
+  def index
   end
 
 end
