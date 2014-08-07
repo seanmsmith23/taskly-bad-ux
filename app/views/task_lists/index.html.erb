@@ -3,6 +3,8 @@
 <h1>My Lists</h1>
 <%= link_to '+ Add Task List', new_task_list_path %>
 
+
+
 <% flash.each do |type, msg| %>
   <p><span style="background-color: lightgreen; border: solid green 2px; padding: 10px"><%= msg %></span></p>
 <% end %>
@@ -29,7 +31,7 @@
 
           <% unless task.completed %>
 
-            <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) - <%= task.assigned_to %></p>
+            <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) - <%= names_to_display(task) %></p>
 
             <div style="display: inline-block; position: relative; margin-left: -75px;">
               <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
@@ -39,7 +41,6 @@
                                        :action => 'complete',
                                        :id => task.id }, :method => :patch %>
             </div>
-
           <% end %>
         <% end %>
       <% else %>

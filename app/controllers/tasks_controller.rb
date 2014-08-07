@@ -14,7 +14,10 @@ class TasksController < ApplicationController
                          description: params[:task][:description],
                          due_date: date,
                          task_list_id: params[:task_list_id],
-                         assigned_to: params[:task][:assigned_to])
+                         assigned_to: params[:task][:assigned_to],
+                         assigned_to_2: params[:task][:assigned_to_2],
+                         assigned_to_3: params[:task][:assigned_to_3],
+                         assigned_to_4: params[:task][:assigned_to_4])
 
     if @task.valid?
       @task.save
