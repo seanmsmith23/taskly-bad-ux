@@ -45,7 +45,6 @@ class TaskListsController < ApplicationController
   end
 
   def show_completed
-    @task_list = TaskList.find(params[:id])
   end
 
   def destroy
