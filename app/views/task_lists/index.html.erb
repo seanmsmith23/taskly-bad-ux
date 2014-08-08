@@ -3,49 +3,82 @@
 <h1>My Lists</h1>
 <%= link_to '+ Add Task List', new_task_list_path %>
 
+<p style="font-weight: bold;">Filter Tasks by Due Date</p>
+
+<form action="/task_lists" method="get">
+  <label for="start">From</label>
+  <input type="text" class="datepicker" name="start_date" required>
+  <label for="start">To</label>
+  <input type="text" class="datepicker" name="end_date" required>
+  <button>Filter</button>
+</form>
+
+<p style="font-weight: bold;">Filter Tasks by Task Name</p>
+
+<form action="/task_lists" method="get">
+  <label>Name Search</label>
+  <input type="text" name="name_search">
+  <button>Search</button>
+</form>
+
+<% if @filtered %>
+  <% if @filtered.is_a?(Array) %>
+    <p style="color: blue; font-size: 15px">Tasks due between <span style="color: red; font-weight: bold;"><%= @filtered[0] %></span> and <span style="color: red; font-weight: bold;"><%= @filtered[1] %></span></p>
+  <% else %>
+    <p style="color:blue;">You searched for '<span style="color: red; font-weight: bold;"><%= @filtered %></span>'</p>
+  <% end %>
+
+  <% @tasks.each do |task| %>
+    <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) <%= names_to_display(task) %></p>
+  <% end %>
 
 
-<% flash.each do |type, msg| %>
-  <p><span style="background-color: lightgreen; border: solid green 2px; padding: 10px"><%= msg %></span></p>
+    <% flash.each do |type, msg| %>
+    <p><span style="background-color: lightgreen; border: solid green 2px; padding: 10px"><%= msg %></span></p>
+  <% end %>
+
+<% else %>
+  <div id="all-task-lists">
+    <% @task_lists.each do |task_list| %>
+
+      <section class="task-list">
+
+        <h1 style="display: inline-block"><%= link_to task_list.name, task_list_path(id: task_list.id)  %></h1>
+        <%= link_to "Edit", edit_task_list_path(id: task_list.id), method: :get %>
+        <div class="new-task" style="display: inline-block">
+          <%= link_to "+ Add Task", new_task_list_task_path(task_list_id: task_list.id) %>
+        </div>
+
+        <%= link_to "Completed", task_list_completed_index_path(task_list_id: task_list.id) %>
+        <%= link_to "Delete", task_list_path(id: task_list.id), method: :delete %>
+
+      </section>
+
+      <section class="task-box">
+        <% if task_list.tasks != [] %>
+          <% task_list.tasks.order(:due_date).each do |task| %>
+
+            <% unless task.completed %>
+
+              <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) <%= names_to_display(task) %></p>
+
+              <div style="display: inline-block; position: relative; margin-left: -75px;">
+                <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
+              </div>
+              <div style="display: inline-block; position: relative; margin-left: -150px;">
+                <%= button_to "Complete", {:controller => :completed,
+                                         :action => 'create',
+                                         :task_list_id => task.id }, :method => :post %>
+              </div>
+            <% end %>
+          <% end %>
+          <% end %>
+        <% if task_list.tasks.where(completed: true).length == task_list.tasks.length %>
+          <p class="task" style="text-align: center"><i>Nothing here to see!</i></p>
+        <% end %>
+      </section>
+    <% end %>
+  </div>
 <% end %>
 
-<div id="all-task-lists">
-  <% @task_lists.each do |task_list| %>
 
-    <section class="task-list">
-
-      <h1 style="display: inline-block"><%= link_to task_list.name, task_list_path(id: task_list.id)  %></h1>
-      <%= link_to "Edit", edit_task_list_path(id: task_list.id), method: :get %>
-      <div class="new-task" style="display: inline-block">
-        <%= link_to "+ Add Task", new_task_list_task_path(task_list_id: task_list.id) %>
-      </div>
-
-      <a href="/task_list/<%= task_list.id %>/completed" style="display: inline-block">Completed</a>
-      <%= link_to "Delete", task_list_path(id: task_list.id), method: :delete %>
-
-    </section>
-
-    <section class="task-box">
-      <% if task_list.tasks != [] %>
-        <% task_list.tasks.order(:due_date).each do |task| %>
-
-          <% unless task.completed %>
-
-            <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) <%= names_to_display(task) %></p>
-
-            <div style="display: inline-block; position: relative; margin-left: -75px;">
-              <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
-            </div>
-            <div style="display: inline-block; position: relative; margin-left: -150px;">
-              <%= button_to "Complete", {:controller => :tasks,
-                                       :action => 'complete',
-                                       :id => task.id }, :method => :patch %>
-            </div>
-          <% end %>
-        <% end %>
-      <% else %>
-        <p class="task" style="text-align: center"><i>Nothing here to see!</i></p>
-      <% end %>
-    </section>
-  <% end %>
-</div>

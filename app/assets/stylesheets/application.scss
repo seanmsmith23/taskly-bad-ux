@@ -19,6 +19,14 @@
   }
 }
 
+.ui-datepicker {
+  background: lightblue;
+}
+
+.ui-datepicker-header {
+  background: deepskyblue
+}
+
 header {
   background: navy;
   color: white;
@@ -51,6 +59,10 @@ main {
 .errors {
   color: maroon;
   margin-bottom: 1em;
+}
+
+.datepicker {
+  background-color: whitesmoke;
 }
 
 .signin-form {

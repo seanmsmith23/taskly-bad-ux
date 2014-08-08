@@ -31,7 +31,9 @@
                 <%= button_to "Delete", { controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
               </div>
               <div style="display: inline-block; position: relative; margin-left: -150px;">
-                <%= button_to "Complete", { :controller => :tasks, :action => 'complete', :id => task.id }, :method => :patch %>
+                <%= button_to "Complete", {:controller => :completed,
+                                           :action => 'create',
+                                           :task_list_id => task.id }, :method => :post %>
               </div>
             <% end %>
           <% end %>
@@ -72,9 +74,9 @@
               <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
             </div>
             <div style="display: inline-block; position: relative; margin-left: -150px;">
-              <%= button_to "Complete", {:controller => :tasks,
-                                         :action => 'complete',
-                                         :id => task.id }, :method => :patch %>
+              <%= button_to "Complete", {:controller => :completed,
+                                         :action => 'create',
+                                         :task_list_id => task.id }, :method => :post %>
             </div>
 
           <% end %>

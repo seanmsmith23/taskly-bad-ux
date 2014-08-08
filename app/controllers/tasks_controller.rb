@@ -34,10 +34,6 @@ class TasksController < ApplicationController
     redirect_to root_path, notice: "Task was deleted successfully!"
   end
 
-  def complete
-
-  end
-
   def index
     @created = TaskList.created_by(current_user.id)
     @task_list = TaskList.assigned_to(current_user.name)
