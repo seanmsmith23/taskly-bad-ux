@@ -10,7 +10,7 @@
   <input type="text" class="datepicker" name="start_date" required>
   <label for="start">To</label>
   <input type="text" class="datepicker" name="end_date" required>
-  <button>Filter</button>
+  <button class="filter-button">Filter</button>
 </form>
 
 <p style="font-weight: bold;">Filter Tasks by Task Name</p>
@@ -18,7 +18,7 @@
 <form action="/task_lists" method="get">
   <label>Name Search</label>
   <input type="text" name="name_search">
-  <button>Search</button>
+  <button class="search-button">Search</button>
 </form>
 
 <% if @filtered %>
@@ -63,12 +63,12 @@
               <p class="task" style="display: inline-block"><%= task.description %> (<%= (task.due_date - Date.today).to_i %> days) <%= names_to_display(task) %></p>
 
               <div style="display: inline-block; position: relative; margin-left: -75px;">
-                <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete %>
+                <%= button_to "Delete", {controller: :tasks, action: 'destroy', id: task.id}, :method => :delete, class: "delete-button" %>
               </div>
               <div style="display: inline-block; position: relative; margin-left: -150px;">
                 <%= button_to "Complete", {:controller => :completed,
                                          :action => 'create',
-                                         :task_list_id => task.id }, :method => :post %>
+                                         :task_list_id => task.id }, :method => :post, class: "complete-button" %>
               </div>
             <% end %>
           <% end %>
@@ -80,5 +80,7 @@
     <% end %>
   </div>
 <% end %>
+
+<img src="http://cdn.makeagif.com/media/7-31-2014/_LjKoS.gif" class="hamster">
 
 

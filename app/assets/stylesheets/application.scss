@@ -110,3 +110,43 @@ main {
   background-color: lightgrey;
   width: 70%;
 }
+
+.something {
+  position: relative;
+  top: 50px;
+  left: 50px;
+}
+
+.something-2 {
+  position: relative;
+  top: -50px;
+  left: -50px;
+}
+
+.something-3 {
+  position: relative;
+  top: 200px;
+  left: 150px;
+}
+
+.something-4 {
+  position: relative;
+  top: 200px;
+  right: 150px;
+}
+
+.hamster {
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+}
+
+.hamster-fill {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: all 5s ease;
+}
+
